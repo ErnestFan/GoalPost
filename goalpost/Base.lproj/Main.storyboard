@@ -16,6 +16,9 @@
             <string>HelveticaNeue-Bold</string>
             <string>HelveticaNeue-Medium</string>
         </array>
+        <array key="HelveticaNeueExtras.ttc">
+            <string>HelveticaNeue-CondensedBlack</string>
+        </array>
     </customFonts>
     <scenes>
         <!--GoalsVC-->
@@ -145,18 +148,39 @@
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wAj-bb-WZH">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="69.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GOAL COMPLETE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LZl-kE-SVQ">
+                                                            <rect key="frame" x="86.5" y="17.5" width="201.5" height="36"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-CondensedBlack" family="Helvetica Neue" pointSize="30"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.91764705882352937" green="0.66274509803921566" blue="0.26666666666666666" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstItem="LZl-kE-SVQ" firstAttribute="centerX" secondItem="wAj-bb-WZH" secondAttribute="centerX" id="CoQ-rl-k3K"/>
+                                                        <constraint firstItem="LZl-kE-SVQ" firstAttribute="centerY" secondItem="wAj-bb-WZH" secondAttribute="centerY" id="pXA-dC-OUu"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="n8p-Mv-k9s" firstAttribute="top" secondItem="J0c-Bf-ptG" secondAttribute="topMargin" id="41k-6a-EJa"/>
                                                 <constraint firstAttribute="trailing" secondItem="FAk-P2-eFU" secondAttribute="trailing" constant="8" id="7En-50-nDV"/>
                                                 <constraint firstItem="FAk-P2-eFU" firstAttribute="leading" secondItem="n8p-Mv-k9s" secondAttribute="trailing" constant="10" id="8dC-i2-ich"/>
+                                                <constraint firstAttribute="bottom" secondItem="wAj-bb-WZH" secondAttribute="bottom" id="INu-Ed-pkQ"/>
+                                                <constraint firstItem="wAj-bb-WZH" firstAttribute="leading" secondItem="J0c-Bf-ptG" secondAttribute="leading" id="Jjb-tR-NxS"/>
                                                 <constraint firstItem="n8p-Mv-k9s" firstAttribute="leading" secondItem="J0c-Bf-ptG" secondAttribute="leadingMargin" id="NK1-v2-ZHV"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="n8p-Mv-k9s" secondAttribute="bottom" id="VR3-l0-FxE"/>
                                                 <constraint firstAttribute="bottom" secondItem="FAk-P2-eFU" secondAttribute="bottom" constant="8" id="hc6-qy-ujd"/>
+                                                <constraint firstItem="wAj-bb-WZH" firstAttribute="top" secondItem="J0c-Bf-ptG" secondAttribute="top" id="jRn-C4-AEb"/>
                                                 <constraint firstItem="FAk-P2-eFU" firstAttribute="top" secondItem="J0c-Bf-ptG" secondAttribute="top" constant="8" id="yX6-zW-gD2"/>
+                                                <constraint firstAttribute="trailing" secondItem="wAj-bb-WZH" secondAttribute="trailing" id="z0X-mD-HgG"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="completionView" destination="wAj-bb-WZH" id="Atb-5a-vFQ"/>
                                             <outlet property="goalDescriptionLbl" destination="j42-Q6-sJc" id="j5h-NW-6Ie"/>
                                             <outlet property="goalProgressLbl" destination="FAk-P2-eFU" id="nd5-b1-3uX"/>
                                             <outlet property="goalTypeLbl" destination="cmv-Yl-46i" id="OPx-IM-rw8"/>
