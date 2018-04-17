@@ -1,6 +1,6 @@
 # GoalPost
 Allow users to create short-term or long-term goals.
-Track progress until completion on goals.
+Track progress until goals completed.
 
 ### Libraries
 <ul>
