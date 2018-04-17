@@ -48,7 +48,6 @@ class GoalsVC: UIViewController {
     }
     
     func undoViewShow() {
-        print("undoView show")
         undoView.isHidden = false
         
         UIView.animate(withDuration: 0.3, delay: 0.5, options: .allowUserInteraction, animations: {
@@ -67,7 +66,6 @@ class GoalsVC: UIViewController {
                 }) { (finish) in
                     if finish {
                         self.undoView.isHidden = true
-                        print("undoView hidden")
                     }
                 }
             }
