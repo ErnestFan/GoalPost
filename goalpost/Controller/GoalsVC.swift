@@ -14,8 +14,12 @@ let appDelegate = UIApplication.shared.delegate as? AppDelegate
 class GoalsVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var undoViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var undoView: UIView!
+    @IBOutlet weak var undoButton: UIButton!
     
     var goals: [Goal] = []
+    var undoViewAnimateId: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,10 +46,44 @@ class GoalsVC: UIViewController {
             }
         }
     }
+    
+    func undoViewShow() {
+        print("undoView show")
+        undoView.isHidden = false
+        
+        UIView.animate(withDuration: 0.3, delay: 0.5, options: .allowUserInteraction, animations: {
+            self.undoView.alpha = 1.0
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    func undoViewHide(_ id: String, in time: Double) {
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + time) {
+            if self.undoViewAnimateId == id {
+                UIView.animate(withDuration: 0.3, delay: 0, options: .allowUserInteraction, animations: {
+                    self.undoView.alpha = 0.01
+                    self.view.layoutIfNeeded()
+                }) { (finish) in
+                    if finish {
+                        self.undoView.isHidden = true
+                        print("undoView hidden")
+                    }
+                }
+            }
+        }
+    }
 
     @IBAction func addGoalBtnWasPressed(_ sender: Any) {
         guard let createGoalVC = storyboard?.instantiateViewController(withIdentifier: "CreateGoalVC") else { return }
         presentDetail(createGoalVC)
+    }
+    
+    @IBAction func undoBtnWasPressed(_ sender: Any) {
+        undoDeleteGoal()
+        fetchCoreDataObjects()
+        self.undoViewAnimateId = ""
+        self.undoViewHide("", in: 0.5)
     }
 }
 
@@ -97,6 +135,12 @@ extension GoalsVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension GoalsVC {
+    func undoDeleteGoal() {
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
+        
+        managedContext.undoManager?.undo()
+    }
+    
     func setProgress(atIndexPath indexPath: IndexPath) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         
@@ -118,13 +162,21 @@ extension GoalsVC {
     func removeGoal(atIndexPath indexPath: IndexPath) {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         
+        managedContext.undoManager = UndoManager()
+        
+        let key = goals[indexPath.row].goalDescription
+        
         managedContext.delete(goals[indexPath.row])
         
         do {
             try managedContext.save()
+            self.undoViewAnimateId = key!
+            self.undoViewShow()
+            self.undoViewHide(key!, in: 4.0)
         } catch {
             debugPrint("Could not remove: \(error.localizedDescription)")
         }
+        
     }
     
     func fetch(completion: (_ complete: Bool) -> ()) {
